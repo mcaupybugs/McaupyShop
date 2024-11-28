@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/mcaupybugs/McaupyShop/issues"
   },
-  "homepage": "https://github.com/mcaupybugs/McaupyShop#readme"
+  "homepage": "https://github.com/mcaupybugs/McaupyShop#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
 }
