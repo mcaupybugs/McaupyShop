@@ -1,10 +1,10 @@
 import './App.css'
-
+import LandingPage from './views/LandingPage.tsx'
 function App() {
 
   return (
     <div>
-      Hey there
+      <LandingPage></LandingPage>
     </div>
   )
 }
