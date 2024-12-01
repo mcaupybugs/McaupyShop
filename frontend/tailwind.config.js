@@ -4,6 +4,7 @@ export default {
   theme: {
     fontFamily: {
       Itim: ["Itim", "sans-serif"],
+      Jost: ["Jost", "sans-serif"],
     },
     extend: {},
   },
