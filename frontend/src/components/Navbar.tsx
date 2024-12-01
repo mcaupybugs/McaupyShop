@@ -1,6 +1,6 @@
 const NavBar = () => {
   return (
-    <div class="w-full h-16 flex border-2 border-black gap-2 pl-48  pr-48">
+    <div class="w-full h-16 flex border-2 border-black gap-2 pl-48  pr-48 fixed bg-white">
       <div class="h-full w-full flex gap-8 ">
         <div class="circular-image border border-black rounded-full h-10 w-10 flex self-center">
           <img class="object-contain rounded-full" src="assets/logo.jpg"></img>
