@@ -2,8 +2,8 @@ import CatalogSearch from "./CatalogSearch";
 import ProductListing from "./ProductListing";
 const ProductGallary = () => {
   return (
-    <div class="h-full w-full pl-48 pr-48 flex-col">
-      <div class="text-4xl font-Jost pt-8 font-light">Catalog</div>
+    <div class="h-full w-full pl-48 pr-48">
+      <div class="text-4xl font-Jost pt-8 font-light flex pb-8">Catalog</div>
       <div class="h-full w-full flex flex-row gap-12">
         <div class="h-full w-full basis-1/5">
           <CatalogSearch />
