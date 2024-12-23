@@ -21,6 +21,7 @@ var doesIdExist = function(req,res,next){
         }
     })
 }
+
 router.get("/", (req,res)=>{
     Project.findAll().then(project => {
         res.status(200).json(project)
@@ -28,7 +29,6 @@ router.get("/", (req,res)=>{
 })
 
 router.post("/", (req,res)=>{
-    try{
         Project.create({
             title: req.body.title,
             developer: req.body.developer,
@@ -37,16 +37,34 @@ router.post("/", (req,res)=>{
             image: req.body.image
         }).then(project => {
             res.status(200).json(project)
-        });
-    }
-    catch(ex){
-        console.log(ex)
-    }
+        }).catch(error=>{
+            res.status(400).json(error.message)
+        })
 })
 
 router.get("/:id", [isIdValid, doesIdExist], (req,res)=>{
     Project.findOne({ where: { id: req.params.id}}).then(project =>{
         res.status(200).json(project);
+    }).catch(error => {
+        res.status(400).json(error.message)
+    })
+})
+
+router.put("/:id", [isIdValid, doesIdExist], (req,res)=>{
+    Project.update(req.body,{where: {id: req.params.id}}).then(project => {
+        res.sendStatus(204)
+    })
+})
+
+router.delete("/:id", [isIdValid, doesIdExist], (req,res)=>{
+    Project.destroy({
+        where:{
+            id: req.params.id
+        }
+    }).then(project => {
+        res.sendStatus(204)
+    }).catch(error => {
+        res.status(400).json(error.message)
     })
 })
 
