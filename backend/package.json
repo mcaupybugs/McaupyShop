@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for McaupyShop project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcaupybugs/McaupyShop.git"
+  },
+  "author": "Mcaupybugs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mcaupybugs/McaupyShop/issues"
+  },
+  "homepage": "https://github.com/mcaupybugs/McaupyShop#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
