@@ -19,7 +19,7 @@ const Navbar = () => {
                         <input placeholder="Enter email address ... " className='h-8 focus:outline-none flex self-center border rounded-sm p-4' />
                     </div>
                     <div className='h-full w-full flex'>
-                        <div className='h-10 w-contain flex border self-center place-items-center p-2 rounded-sm font-medium text-lg'>
+                        <div className='h-10 w-contain flex border self-center place-items-center p-2 rounded-sm font-medium text-lg cursor-pointer'>
                             Subscribe
                         </div>
                     </div>

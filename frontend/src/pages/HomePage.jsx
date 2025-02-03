@@ -44,8 +44,8 @@ const HomePage = () => {
                     </div>
                     <div className='h-full w-full flex flex-col flex-9/14'>
                         <div className='h-full w-full flex flex-row pt-4 gap-8'>
-                            <FilterBox></FilterBox>
-                            <Project></Project>
+                            <FilterBox />
+                            <Project />
                         </div>
                     </div>
                     <div className='h-full w-full flex-2/14'>
