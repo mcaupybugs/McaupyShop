@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import FilterBox from "../components/FilterBox";
 import Project from "../components/Project";
+import { fetchProjects } from "../services/ProjectService";
 
 const HomePage = () => {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setLoading(true);
+    const getProjects = async () => {
+      const projectData = await fetchProjects();
+      console.log(projectData);
+      setProjects(projectData);
+      setLoading(false);
+    };
+
+    getProjects();
+  }, []);
   return (
     <div className="h-full w-full flex flex-col">
       <div className="sticky top-0 z-50 bg-white">
@@ -37,11 +51,17 @@ const HomePage = () => {
           <div className="h-full w-full flex flex-col flex-9/14">
             <div className="h-full w-full flex flex-row pt-4 gap-8">
               <FilterBox />
+
               <div className="h-full w-full flex flex-wrap gap-4">
-                <Project />
-                <Project />
-                <Project />
-                <Project />
+                {loading ? (
+                  <div></div>
+                ) : (
+                  projects.map((project) => {
+                    return (
+                      <Project key={project.id} projectDetails={project} />
+                    );
+                  })
+                )}
               </div>
             </div>
           </div>

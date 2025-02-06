@@ -1,11 +1,9 @@
-const express = require('express')
-const app = express()
-const port = 4000
+import app from "./app.js";
+import sequelize from "./config/db.js";
+const port = 4000;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+sequelize.sync();
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});

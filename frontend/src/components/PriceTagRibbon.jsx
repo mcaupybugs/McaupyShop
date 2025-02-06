@@ -1,9 +1,9 @@
 import React from "react";
 
-const PriceTagRibbon = () => {
+const PriceTagRibbon = ({ price }) => {
   return (
     <div className="h-full w-contain border p-2 rounded-md">
-      <div>$20</div>
+      <div>${price}</div>
     </div>
   );
 };
