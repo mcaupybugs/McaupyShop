@@ -20,11 +20,11 @@ const HomePage = () => {
   }, []);
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="sticky top-0 z-50 bg-white">
+      <div className="sticky top-0 z-50 bg-white itim-regular">
         <Navbar></Navbar>
       </div>
       {/* rest of the page, after the navbar vertically */}
-      <div className="h-full w-full flex flex-col">
+      <div className="h-full w-full flex flex-col jost-custom-font">
         {/* horizontal diving the page into three sections to ensure margins on both ends */}
         <div className="h-42 w-full flex flex-row border-b">
           <div className="h-full w-full flex-3/14"></div>
