@@ -7,7 +7,7 @@ const Navbar = () => {
         <div className="h-full w-full flex flex-row gap-2">
           <div className="h-full w-full flex justify-end p-2 pr-8">
             <img
-              src="assets/logo.jpg"
+              src="/assets/logo.jpg"
               alt="My display picture"
               className="border rounded-full"
             />
