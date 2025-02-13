@@ -25,9 +25,9 @@ const Project = ({ projectDetails }) => {
           {projectDetails.title}
         </div>
       </div>
-      <div className=" w-full flex flex-row flex-1/10 border-t justify-between p-2">
+      <div className=" w-full flex flex-row flex-1/10 border-t justify-between p-2 ">
         <PriceTagRibbon price={projectDetails.price}></PriceTagRibbon>
-        <div className=" w-contain border p-2 rounded-md cursor-pointer">
+        <div className=" w-contain border p-2 rounded-md cursor-pointer button-bg-color">
           {" "}
           Quick Buy
         </div>

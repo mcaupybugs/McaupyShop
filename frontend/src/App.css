@@ -10,3 +10,17 @@
   font-weight: 400;
   font-style: normal;
 }
+
+.c-icon {
+  --star-active: #fece3c;
+  --star-inactive: #6c6962;
+  fill: var(--star-inactive);
+}
+
+.c-icon.active {
+  fill: var(--star-active);
+}
+
+.button-bg-color {
+  background-color: #add8e6;
+}
