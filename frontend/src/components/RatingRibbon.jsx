@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
 
-const RatingRibbon = ({ initialProductRating }) => {
+const RatingRibbon = ({ initialProductRating, displayTextRating = false }) => {
   const colors = {
     orange: "#F2C265",
     grey: "#FFFFFF",
@@ -45,7 +45,7 @@ const RatingRibbon = ({ initialProductRating }) => {
           />
         );
       })}
-      <div>{rating} Ratings</div>
+      {displayTextRating && <div>{rating} Ratings</div>}
     </div>
   );
 };

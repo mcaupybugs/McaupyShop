@@ -51,7 +51,6 @@ const HomePage = () => {
           <div className="h-full w-full flex flex-col flex-9/14">
             <div className="h-full w-full flex flex-row pt-4 gap-8">
               <FilterBox />
-
               <div className="h-full w-full flex flex-wrap gap-4">
                 {loading ? (
                   <div></div>
