@@ -1,5 +1,5 @@
 import React from "react";
-
+const mimeType = "image/png";
 const SliderContent = ({ activeIndex, sliderImage }) => {
   return (
     <section>
@@ -8,7 +8,11 @@ const SliderContent = ({ activeIndex, sliderImage }) => {
           key={index}
           className={index === activeIndex ? "slides active" : "inactive"}
         >
-          <img className="slide-image" src={slide} alt="" />
+          <img
+            className="slide-image"
+            src={`data:${mimeType};base64,${slide}`}
+            alt=""
+          />
         </div>
       ))}
     </section>

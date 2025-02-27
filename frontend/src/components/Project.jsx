@@ -1,6 +1,7 @@
 import React from "react";
 import PriceTagRibbon from "./PriceTagRibbon";
 import { useNavigate } from "react-router";
+const mimeType = "image/png";
 
 const Project = ({ projectDetails }) => {
   let navigate = useNavigate();
@@ -17,7 +18,7 @@ const Project = ({ projectDetails }) => {
         <div className="w-full flex-6/10 border">
           <img
             className="h-48 w-full object-cover"
-            src={projectDetails.displayImageBlobUrl}
+            src={`data:${mimeType};base64,${projectDetails.displayImage}`}
             alt="image description"
           ></img>
         </div>

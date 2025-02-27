@@ -1,10 +1,12 @@
 import express from "express";
 import Project from "../models/Project.js";
+import { CreateProject } from "../service/ProjectService.js";
 
 const ProjectRouter = express.Router();
 
 ProjectRouter.get("/", async (req, res) => {
   var projects = await Project.findAll();
+  console.log(projects);
   res.send(projects);
 });
 
@@ -14,7 +16,7 @@ ProjectRouter.get("/:id", async (req, res) => {
 });
 
 ProjectRouter.post("/", async (req, res) => {
-  var newlyCreatedProject = await Project.create(req.body);
+  var newlyCreatedProject = await CreateProject(req.body);
   res.send(newlyCreatedProject);
 });
 

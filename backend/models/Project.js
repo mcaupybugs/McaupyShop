@@ -17,13 +17,13 @@ const Project = sequelize.define("Project", {
   price: {
     type: DataTypes.INTEGER,
   },
-  displayImageBlobUrl: {
+  displayImage: {
     type: DataTypes.STRING,
   },
   projectImages: {
     type: DataTypes.JSON,
   },
-  videoBlobUrl: {
+  projectBlob: {
     type: DataTypes.STRING,
   },
   rating: {
