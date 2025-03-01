@@ -7,11 +7,14 @@ import { fetchProjects } from "../services/ProjectService";
 const HomePage = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const changeProjectBasedOnFilter = (projects) => {
+    setProjects(projects);
+  };
+
   useEffect(() => {
     setLoading(true);
     const getProjects = async () => {
       const projectData = await fetchProjects();
-      console.log(projectData);
       setProjects(projectData);
       setLoading(false);
     };
@@ -50,7 +53,10 @@ const HomePage = () => {
           <div className="h-full w-full flex-3/14"></div>
           <div className="h-full w-full flex flex-col flex-9/14">
             <div className="h-full w-full flex flex-row pt-4 gap-8">
-              <FilterBox />
+              <FilterBox
+                projectDetails={projects}
+                changeProjectBasedOnFilter={changeProjectBasedOnFilter}
+              />
               <div className="h-full w-full flex flex-wrap gap-4">
                 {loading ? (
                   <div></div>
