@@ -1,47 +1,23 @@
 import express from "express";
 import Project from "../models/Project.js";
 import { CreateProject } from "../service/ProjectService.js";
+import { catchError } from "../handlers/ErrorHandler.js";
+import * as ProjectController from "../controllers/ProjectController.js";
 
 const ProjectRouter = express.Router();
 
-ProjectRouter.get("/", async (req, res) => {
-  var projects = await Project.findAll();
-  console.log(projects);
-  res.send(projects);
-});
+ProjectRouter.route("/").get(catchError(ProjectController.listProjects));
 
-ProjectRouter.get("/:id", async (req, res) => {
-  var filteredProject = await Project.findOne({ id: req.params.id });
-  res.send(filteredProject);
-});
+ProjectRouter.route("/:id").get(catchError(ProjectController.listProject));
 
-ProjectRouter.post("/", async (req, res) => {
-  var newlyCreatedProject = await CreateProject(req.body);
-  res.send(newlyCreatedProject);
-});
+ProjectRouter.route("/").post(catchError(ProjectController.addProject));
 
-ProjectRouter.put("/:id", async (req, res) => {
-  await Project.update(req.body, {
-    where: { id: req.params.id },
-  });
-  res.sendStatus(202);
-});
+ProjectRouter.route("/:id").put(catchError(ProjectController.putProject));
 
-ProjectRouter.patch("/:id", async (req, res) => {
-  var filteredProject = await Project.findOne({ where: { id: req.params.id } });
-  filteredProject.update(req.body);
-  await filteredProject.save();
-  res.sendStatus(202);
-});
+ProjectRouter.route("/:id").patch(catchError(ProjectController.patchProject));
 
-ProjectRouter.delete("/:id", async (req, res) => {
-  await Project.destroy({ where: { id: req.params.id } });
-  res.sendStatus(204);
-});
+ProjectRouter.route("/:id").delete(catchError(ProjectController.deleteProject));
 
-ProjectRouter.delete("/", async (req, res) => {
-  await Project.destroy({ truncate: true });
-  res.sendStatus(204);
-});
+ProjectRouter.route("/").delete(catchError(ProjectController.deleteProjects));
 
 export default ProjectRouter;

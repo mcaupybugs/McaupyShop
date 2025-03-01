@@ -7,7 +7,6 @@ const CreateProject = async (payload) => {
   var projectBlobImages = [];
 
   payload.projectImages.map(async (image) => {
-    console.log("Running", image);
     var content = await getImageFromBlobName(image);
     projectBlobImages.push(content);
   });
