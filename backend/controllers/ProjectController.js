@@ -3,6 +3,7 @@ import { CreateProject } from "../service/ProjectService.js";
 
 const listProjects = async (req, res) => {
   var projects = await Project.findAll();
+  console.log(projects[0].tags);
   res.send(projects);
 };
 

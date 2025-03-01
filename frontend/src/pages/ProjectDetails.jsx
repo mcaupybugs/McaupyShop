@@ -9,7 +9,6 @@ import { FaDollarSign } from "react-icons/fa";
 const ProjectDetails = () => {
   let location = useLocation();
   var projectDetails = location.state?.projectDetails;
-
   return (
     <div className="h-full w-full flex flex-col pb-12">
       <div className="sticky top-0 z-50 bg-white itim-regular">
@@ -41,8 +40,8 @@ const ProjectDetails = () => {
             sliderImage={projectDetails.projectImages}
             sliderImageCount={2}
           ></Slider>
-          <div className="h-full w-full flex flex-row border divide-y divide-x">
-            <div className="h-full w-full flex flex-col basis-4/6 divide-y ">
+          <div className="h-full w-full flex flex-row border divide-x">
+            <div className="h-full w-full flex flex-col basis-4/6 divide-y">
               <div className="h-full w-full flex basis-4/16 text-3xl p-2">
                 {projectDetails.title}
               </div>
@@ -84,6 +83,18 @@ const ProjectDetails = () => {
               </div>
               <div className="h-full w-full border text-2xl cursor-pointer rounded-md button-bg-color flex justify-center font-light p-2">
                 Buy Now !!!
+              </div>
+              <div className="h-full w-full flex gap-2 flex-wrap">
+                {projectDetails.tags.map((tag, index) => {
+                  return (
+                    <div
+                      className="border border-rounded-md p-2 bg-gray-200 h-contain w-contain"
+                      key={index}
+                    >
+                      {tag}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
