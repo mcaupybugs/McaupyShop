@@ -4,10 +4,15 @@ import FilterBox from "../components/FilterBox";
 import Project from "../components/Project";
 import { fetchProjects } from "../services/ProjectService";
 
+let totalProjects;
 const HomePage = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const changeProjectBasedOnFilter = (projects) => {
+    if (projects.length == 0) {
+      setProjects(totalProjects);
+      return;
+    }
     setProjects(projects);
   };
 
@@ -15,6 +20,9 @@ const HomePage = () => {
     setLoading(true);
     const getProjects = async () => {
       const projectData = await fetchProjects();
+      if (!totalProjects) {
+        totalProjects = projectData;
+      }
       setProjects(projectData);
       setLoading(false);
     };
@@ -53,10 +61,14 @@ const HomePage = () => {
           <div className="h-full w-full flex-3/14"></div>
           <div className="h-full w-full flex flex-col flex-9/14">
             <div className="h-full w-full flex flex-row pt-4 gap-8">
-              <FilterBox
-                projectDetails={projects}
-                changeProjectBasedOnFilter={changeProjectBasedOnFilter}
-              />
+              {loading ? (
+                <div></div>
+              ) : (
+                <FilterBox
+                  projectDetails={totalProjects ? totalProjects : projects}
+                  changeProjectBasedOnFilter={changeProjectBasedOnFilter}
+                />
+              )}
               <div className="h-full w-full flex flex-wrap gap-4">
                 {loading ? (
                   <div></div>
