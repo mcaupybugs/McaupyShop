@@ -1,5 +1,5 @@
 import Project from "../models/Project.js";
-import { CreateProject } from "../service/ProjectService.js";
+import { CreateProject, DownloadProject } from "../service/ProjectService.js";
 
 const listProjects = async (req, res) => {
   var projects = await Project.findAll();
@@ -41,6 +41,12 @@ const deleteProjects = async (req, res) => {
   res.sendStatus(204);
 };
 
+const purchaseProject = async (req, res) => {
+  const projectId = req.params.id;
+  var projectDetails = await DownloadProject(projectId);
+  res.send(200);
+};
+
 export {
   listProject,
   listProjects,
@@ -49,4 +55,5 @@ export {
   putProject,
   deleteProject,
   deleteProjects,
+  purchaseProject,
 };

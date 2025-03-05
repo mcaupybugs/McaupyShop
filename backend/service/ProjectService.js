@@ -26,4 +26,9 @@ const CreateProject = async (payload) => {
   return newProject;
 };
 
-export { CreateProject };
+const DownloadProject = async (projectId) => {
+  var projectDetails = await Project.findOne({ id: projectId });
+  console.log(projectDetails);
+};
+
+export { CreateProject, DownloadProject };

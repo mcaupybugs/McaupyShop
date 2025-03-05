@@ -1,6 +1,7 @@
 import React from "react";
 import PriceTagRibbon from "./PriceTagRibbon";
 import { useNavigate } from "react-router";
+import { purchaseProject } from "../services/ProjectService.js";
 const mimeType = "image/png";
 
 const Project = ({ projectDetails }) => {
@@ -8,6 +9,11 @@ const Project = ({ projectDetails }) => {
   const openProjectPage = (id) => {
     var newRoute = "projectDetails/" + id;
     navigate(newRoute, { state: { projectDetails } });
+  };
+
+  const purchaseProjectHelper = async (projectId) => {
+    console.log(projectId);
+    const projectZip = await purchaseProject(projectId);
   };
   return (
     <div className="h-96 w-64 flex flex-col border">
@@ -28,7 +34,10 @@ const Project = ({ projectDetails }) => {
       </div>
       <div className=" w-full flex flex-row flex-1/10 border-t justify-between p-2 ">
         <PriceTagRibbon price={projectDetails.price}></PriceTagRibbon>
-        <div className=" w-contain border p-2 rounded-md cursor-pointer button-bg-color">
+        <div
+          className=" w-contain border p-2 rounded-md cursor-pointer button-bg-color"
+          onClick={() => purchaseProjectHelper(projectDetails.id)}
+        >
           {" "}
           Quick Buy
         </div>
