@@ -5,10 +5,26 @@ import RatingRibbon from "../components/RatingRibbon";
 import PriceTagRibbon from "../components/PriceTagRibbon";
 import Slider from "../components/Slider";
 import { FaDollarSign } from "react-icons/fa";
+import { purchaseProject } from "../services/ProjectService";
 
 const ProjectDetails = () => {
   let location = useLocation();
   var projectDetails = location.state?.projectDetails;
+  const purchaseProjectHelper = async (projectName, projectId) => {
+    try {
+      console.log(projectId);
+      const projectZipBlobUrl = await purchaseProject(projectId);
+      const tempLink = document.createElement("a");
+      tempLink.href = projectZipBlobUrl;
+      tempLink.download = `${projectName}.zip`;
+      document.body.append(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      URL.revokeObjectURL(projectZipBlobUrl);
+    } catch (error) {
+      console.log("Error downloading the file:", error);
+    }
+  };
   return (
     <div className="h-full w-full flex flex-col pb-12">
       <div className="sticky top-0 z-50 bg-white itim-regular">
@@ -81,7 +97,12 @@ const ProjectDetails = () => {
                   className="text-xl outline-none itim-regular"
                 ></input>
               </div>
-              <div className="h-full w-full border text-2xl cursor-pointer rounded-md button-bg-color flex justify-center font-light p-2">
+              <div
+                className="h-full w-full border text-2xl cursor-pointer rounded-md button-bg-color flex justify-center font-light p-2"
+                onClick={() =>
+                  purchaseProjectHelper(projectDetails.title, projectDetails.id)
+                }
+              >
                 Buy Now !!!
               </div>
               <div className="h-full w-full flex gap-2 flex-wrap">

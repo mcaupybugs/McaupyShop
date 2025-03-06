@@ -1,6 +1,4 @@
 import express from "express";
-import Project from "../models/Project.js";
-import { CreateProject } from "../service/ProjectService.js";
 import { catchError } from "../handlers/ErrorHandler.js";
 import * as ProjectController from "../controllers/ProjectController.js";
 

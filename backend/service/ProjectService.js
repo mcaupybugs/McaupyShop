@@ -1,5 +1,6 @@
 import Project from "../models/Project.js";
-import { getImageFromBlobName } from "./StorageBlobService.js";
+import { createTransaction } from "./PaymentService.js";
+import { downloadBlob, getImageFromBlobName } from "./StorageBlobService.js";
 
 const CreateProject = async (payload) => {
   console.log(payload);
@@ -28,7 +29,10 @@ const CreateProject = async (payload) => {
 
 const DownloadProject = async (projectId) => {
   var projectDetails = await Project.findOne({ id: projectId });
-  console.log(projectDetails);
+  var projectZipName = projectDetails.title.replaceAll(" ", "") + "-code.zip";
+  var projectZipBlobBuffer = await downloadBlob(projectZipName);
+  console.log(projectZipBlobBuffer);
+  return projectZipBlobBuffer;
 };
 
 export { CreateProject, DownloadProject };

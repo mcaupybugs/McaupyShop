@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Backend for McaupyShop project",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "NODE_ENV=test nodemon index.js"
@@ -25,6 +26,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "razorpay": "^2.9.6",
     "sequelize": "^6.37.5",
     "sqlite3": "^5.1.7"
   },

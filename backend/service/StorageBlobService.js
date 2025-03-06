@@ -18,7 +18,6 @@ const getImageFromBlobName = async (blobName) => {
 const downloadBlob = async (blobName) => {
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
   const downloadBlockBlobResponse = await blockBlobClient.downloadToBuffer(0);
-  console.log("buffer", downloadBlockBlobResponse);
   return downloadBlockBlobResponse;
 };
 

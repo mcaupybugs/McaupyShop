@@ -11,9 +11,22 @@ const Project = ({ projectDetails }) => {
     navigate(newRoute, { state: { projectDetails } });
   };
 
-  const purchaseProjectHelper = async (projectId) => {
-    console.log(projectId);
-    const projectZip = await purchaseProject(projectId);
+  const purchaseProjectHelper = async (projectDetails) => {
+    try {
+      const projectZipBlobUrl = await purchaseProject(projectDetails);
+      if (!projectZipBlobUrl) {
+        console.log("Project download failed because of some error");
+      }
+      const tempLink = document.createElement("a");
+      tempLink.href = projectZipBlobUrl;
+      tempLink.download = `${projectDetails.title}.zip`;
+      document.body.append(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      URL.revokeObjectURL(projectZipBlobUrl);
+    } catch (error) {
+      console.log("Error downloading the file:", error);
+    }
   };
   return (
     <div className="h-96 w-64 flex flex-col border">
@@ -36,7 +49,7 @@ const Project = ({ projectDetails }) => {
         <PriceTagRibbon price={projectDetails.price}></PriceTagRibbon>
         <div
           className=" w-contain border p-2 rounded-md cursor-pointer button-bg-color"
-          onClick={() => purchaseProjectHelper(projectDetails.id)}
+          onClick={() => purchaseProjectHelper(projectDetails)}
         >
           {" "}
           Quick Buy

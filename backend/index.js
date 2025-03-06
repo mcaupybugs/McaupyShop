@@ -1,6 +1,7 @@
+import "./config/envLoader.js";
 import app from "./app.js";
 import sequelize from "./config/db.js";
-const port = 4000;
+const port = process.env.NODE_PORT || 4000;
 
 sequelize.sync();
 

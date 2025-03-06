@@ -43,8 +43,14 @@ const deleteProjects = async (req, res) => {
 
 const purchaseProject = async (req, res) => {
   const projectId = req.params.id;
-  var projectDetails = await DownloadProject(projectId);
-  res.send(200);
+  var projectBuffer = await DownloadProject(projectId);
+  if (projectBuffer == null) {
+    res.send(503);
+  }
+  res.setHeader("Content-Disposition", `attachment; filename=${projectId}.zip`);
+  res.setHeader("Content-Type", "application/zip");
+  res.setHeader("Content-Length", projectBuffer.length);
+  res.send(projectBuffer);
 };
 
 export {
