@@ -4,6 +4,9 @@ import { catchError } from "../handlers/ErrorHandler.js";
 
 const PaymentRouter = express.Router();
 
-PaymentRouter.route("/:id").post(catchError(PaymentController.makePayment));
+PaymentRouter.route("/success").post(
+  catchError(PaymentController.verifyPayment)
+);
 
+PaymentRouter.route("/:id").post(catchError(PaymentController.makePayment));
 export default PaymentRouter;

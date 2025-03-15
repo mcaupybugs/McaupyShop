@@ -8,9 +8,9 @@ import {
   notFound,
   productionErrors,
 } from "./handlers/ErrorHandler.js";
+import AuthRouter from "./routes/AuthRoutes.js";
 
 const app = express();
-app.options("*", cors()); // Handle CORS for preflight requests
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/payments", PaymentRouter);
 app.use("/projects", ProjectRoutes);
+app.use("/auth", AuthRouter);
 app.use(notFound);
 
 console.log(process.env.NODE_ENV);

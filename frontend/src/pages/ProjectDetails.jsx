@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import { useLocation } from "react-router";
 import RatingRibbon from "../components/RatingRibbon";
 import PriceTagRibbon from "../components/PriceTagRibbon";
@@ -27,9 +26,6 @@ const ProjectDetails = () => {
   };
   return (
     <div className="h-full w-full flex flex-col pb-12">
-      <div className="sticky top-0 z-50 bg-white itim-regular">
-        <Navbar />
-      </div>
       <div className="h-full w-full flex flex-row border-b-2 text-xl font-light p-2 items-center jost-custom-font">
         <div className="h-full w-full flex flex-row justify-center gap-4">
           <div className="h-full w-full flex justify-end">
@@ -106,16 +102,17 @@ const ProjectDetails = () => {
                 Buy Now !!!
               </div>
               <div className="h-full w-full flex gap-2 flex-wrap">
-                {projectDetails.tags.map((tag, index) => {
-                  return (
-                    <div
-                      className="border border-rounded-md p-2 bg-gray-200 h-contain w-contain"
-                      key={index}
-                    >
-                      {tag}
-                    </div>
-                  );
-                })}
+                {projectDetails &&
+                  projectDetails.tags.map((tag, index) => {
+                    return (
+                      <div
+                        className="border border-rounded-md p-2 bg-gray-200 h-contain w-contain"
+                        key={index}
+                      >
+                        {tag}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>

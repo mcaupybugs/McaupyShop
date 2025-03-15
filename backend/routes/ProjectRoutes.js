@@ -8,8 +8,8 @@ ProjectRouter.route("/").get(catchError(ProjectController.listProjects));
 
 ProjectRouter.route("/:id").get(catchError(ProjectController.listProject));
 
-ProjectRouter.route("/:id/purchase").get(
-  catchError(ProjectController.purchaseProject)
+ProjectRouter.route("/:id/download").post(
+  catchError(ProjectController.downloadProjectController)
 );
 ProjectRouter.route("/").post(catchError(ProjectController.addProject));
 

@@ -1,5 +1,5 @@
 import Project from "../models/Project.js";
-import { createTransaction } from "./PaymentService.js";
+import User from "../models/User.js";
 import { downloadBlob, getImageFromBlobName } from "./StorageBlobService.js";
 
 const CreateProject = async (payload) => {
@@ -9,6 +9,7 @@ const CreateProject = async (payload) => {
 
   payload.projectImages.map(async (image) => {
     var content = await getImageFromBlobName(image);
+    console.log("Contnet", content);
     projectBlobImages.push(content);
   });
 
@@ -24,6 +25,7 @@ const CreateProject = async (payload) => {
   };
   console.log(newProject);
   await Project.create(newProject);
+  console.log("projectCreated");
   return newProject;
 };
 
@@ -35,4 +37,19 @@ const DownloadProject = async (projectId) => {
   return projectZipBlobBuffer;
 };
 
-export { CreateProject, DownloadProject };
+const checkProjectPurchased = async (projectId, userEmail) => {
+  var userContext = await User.findOne({ where: { email: userEmail } });
+  if (!userContext) {
+    console.log("User not found");
+    return false;
+  }
+  var projects = userContext.getProjects({ where: { id: projectId } });
+  console.log("Found projects ", projects);
+  if (projects) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export { CreateProject, DownloadProject, checkProjectPurchased };

@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PriceTagRibbon from "./PriceTagRibbon";
 import { useNavigate } from "react-router";
-import { purchaseProject } from "../services/ProjectService.js";
+import {
+  downloadProject,
+  purchaseProject,
+} from "../services/ProjectService.js";
+import { UserContext } from "../App.js";
 const mimeType = "image/png";
 
 const Project = ({ projectDetails }) => {
+  const { user, setUser } = useContext(UserContext);
   let navigate = useNavigate();
   const openProjectPage = (id) => {
     var newRoute = "projectDetails/" + id;
     navigate(newRoute, { state: { projectDetails } });
   };
 
-  const purchaseProjectHelper = async (projectDetails) => {
+  useEffect(() => {
+    isProjectBought();
+  }, []);
+
+  const isProjectBought = () => {
+    if (projectDetails) {
+      var users = projectDetails;
+      console.log("Users", users);
+    }
+  };
+
+  const downloadProjectHelper = async (projectZipBlobUrl) => {
     try {
-      const projectZipBlobUrl = await purchaseProject(projectDetails);
+      console.log("ProjectBlob", projectZipBlobUrl);
       if (!projectZipBlobUrl) {
         console.log("Project download failed because of some error");
+        return;
       }
       const tempLink = document.createElement("a");
       tempLink.href = projectZipBlobUrl;
@@ -28,6 +45,23 @@ const Project = ({ projectDetails }) => {
       console.log("Error downloading the file:", error);
     }
   };
+
+  const purchaseProjectHelper = async (projectDetails) => {
+    if (!user) {
+      // create an alert tab
+      console.log("Please login to buy the project");
+    }
+    console.log("user email", user.email);
+    var result = await purchaseProject(projectDetails, user.email, async () => {
+      console.log("RESULT", result);
+      var fileUrl = await downloadProject(projectDetails, user.email);
+      await downloadProjectHelper(fileUrl);
+    });
+    // console.log("RESULT", result);
+    // var fileUrl = await downloadProject(projectDetails, user.email);
+    // await downloadProjectHelper(fileUrl);
+  };
+
   return (
     <div className="h-96 w-64 flex flex-col border">
       <div

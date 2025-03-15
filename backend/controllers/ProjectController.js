@@ -1,9 +1,12 @@
 import Project from "../models/Project.js";
-import { CreateProject, DownloadProject } from "../service/ProjectService.js";
+import {
+  CreateProject,
+  DownloadProject,
+  checkProjectPurchased,
+} from "../service/ProjectService.js";
 
 const listProjects = async (req, res) => {
   var projects = await Project.findAll();
-  console.log(projects[0].tags);
   res.send(projects);
 };
 
@@ -41,8 +44,14 @@ const deleteProjects = async (req, res) => {
   res.sendStatus(204);
 };
 
-const purchaseProject = async (req, res) => {
+const downloadProjectController = async (req, res) => {
   const projectId = req.params.id;
+  var userEmail = req.body.userEmail;
+  var isProjectPurchased = await checkProjectPurchased(projectId, userEmail);
+  if (!isProjectPurchased) {
+    res.send(403).json({ err: "Payment not done" });
+    return;
+  }
   var projectBuffer = await DownloadProject(projectId);
   if (projectBuffer == null) {
     res.send(503);
@@ -61,5 +70,5 @@ export {
   putProject,
   deleteProject,
   deleteProjects,
-  purchaseProject,
+  downloadProjectController,
 };

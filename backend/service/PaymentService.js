@@ -1,24 +1,33 @@
+import { validatePaymentVerification } from "razorpay/dist/utils/razorpay-utils.js";
 import razorInstance from "../config/razorpay.js";
 
-const createTransaction = async (amount, currency) => {
+const createOrder = async (amount, currency) => {
   var transactionOptions = {
-    amount: amount,
+    amount: amount * 100,
     currency: currency,
   };
 
   var order = await new Promise((resolve, reject) => {
     razorInstance.orders.create(transactionOptions, (err, order) => {
       if (err) {
-        console.log(err);
         reject(err);
-        return false;
       }
       resolve(order);
-      console.log(order);
-      return true;
     });
   });
-  console.log(order);
+  return order.id;
 };
 
-export { createTransaction };
+const paymentVerfication = async (paymentData) => {
+  const verificationResult = validatePaymentVerification(
+    {
+      order_id: paymentData.razorpayOrderId,
+      payment_id: paymentData.razorpayPaymentId,
+    },
+    paymentData.razorpaySignature,
+    process.env.RAZOR_TEST_SECRET
+  );
+  return verificationResult;
+};
+
+export { createOrder, paymentVerfication };

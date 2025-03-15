@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
 import FilterBox from "../components/FilterBox";
 import Project from "../components/Project";
 import { fetchProjects } from "../services/ProjectService";
@@ -31,9 +30,6 @@ const HomePage = () => {
   }, []);
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="sticky top-0 z-50 bg-white itim-regular">
-        <Navbar></Navbar>
-      </div>
       {/* rest of the page, after the navbar vertically */}
       <div className="h-full w-full flex flex-col jost-custom-font">
         {/* horizontal diving the page into three sections to ensure margins on both ends */}
