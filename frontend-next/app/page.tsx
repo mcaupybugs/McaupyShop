@@ -1,8 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchProjects } from "@/services/ProjectService";
 
+let totalProjects: [];
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+    const getProjects = async () => {
+      const projectData = await fetchProjects();
+      if (!totalProjects) {
+        totalProjects = projectData;
+      }
+      setProjects(projectData);
+      setLoading(false);
+    };
+
+    getProjects();
+  }, []);
 
   return (
     <div className="h-full w-full flex flex-col">
