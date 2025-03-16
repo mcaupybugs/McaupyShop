@@ -1,7 +1,10 @@
+"use client";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { useEffect, useState, createContext } from "react";
+import { User } from "./types";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,21 +16,41 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "McaupyShop",
-  description: "Shop to sell your projects",
-};
+// export const metadata: Metadata = {
+//   title: "McaupyShop",
+//   description: "Shop to sell your projects",
+// };
+
+interface UserContextType {
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+}
+
+export const UserContext = createContext<UserContextType | undefined>(
+  undefined
+);
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [user, setUser] = useState<User | null>(null);
+  useEffect(() => {
+    // window.sessionStorage.clear();
+    var currentUser = window.sessionStorage.getItem("current_user");
+    if (currentUser !== null) {
+      var parsedCurrentUser = JSON.parse(currentUser);
+      setUser(parsedCurrentUser);
+    }
+  }, []);
   return (
     <html lang="en">
       <body>
-        <Navbar></Navbar>
-        {children}
+        <UserContext.Provider value={{ user, setUser }}>
+          <Navbar></Navbar>
+          {children}
+        </UserContext.Provider>
       </body>
     </html>
   );
