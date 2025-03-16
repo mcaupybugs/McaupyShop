@@ -3,7 +3,7 @@ import { ProjectDetails } from "../Project/Project.model";
 
 interface FilterBoxProps {
   projectDetails: ProjectDetails[];
-  changeProjectBasedOnFilter: () => void;
+  changeProjectBasedOnFilter: (projects: ProjectDetails[]) => void;
 }
 const showDropdown = (dropDownIdSuffix: string) => {
   const allDropDownIdSuffix = ["sortby", "tags", "price"];

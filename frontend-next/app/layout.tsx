@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState, createContext } from "react";
-import { User } from "./types";
+import { User, UserContextType } from "./types";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,11 +20,6 @@ const geistMono = Geist_Mono({
 //   title: "McaupyShop",
 //   description: "Shop to sell your projects",
 // };
-
-interface UserContextType {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
-}
 
 export const UserContext = createContext<UserContextType | undefined>(
   undefined

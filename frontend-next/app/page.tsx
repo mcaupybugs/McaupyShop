@@ -1,11 +1,22 @@
 "use client";
 import { useEffect, useState } from "react";
 import { fetchProjects } from "@/services/ProjectService";
+import { FilterBox } from "@/components/FilterBox";
+import { ProjectDetails } from "@/components/Project/Project.model";
+import Project from "@/components/Project/Project";
 
 let totalProjects: [];
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [projects, setProjects] = useState<ProjectDetails[] | []>([]);
+
+  const changeProjectBasedOnFilter = (projects: ProjectDetails[]) => {
+    if (projects.length == 0) {
+      setProjects(totalProjects);
+      return;
+    }
+    setProjects(projects);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -50,16 +61,16 @@ export default function Home() {
           <div className="h-full w-full flex-3/14"></div>
           <div className="h-full w-full flex flex-col flex-9/14">
             <div className="h-full w-full flex flex-row pt-4 gap-8">
-              {/* {loading ? (
+              {loading ? (
                 <div></div>
               ) : (
                 <FilterBox
                   projectDetails={totalProjects ? totalProjects : projects}
                   changeProjectBasedOnFilter={changeProjectBasedOnFilter}
                 />
-              )} */}
+              )}
               <div className="h-full w-full flex flex-wrap gap-4">
-                {/* {loading ? (
+                {loading ? (
                   <div></div>
                 ) : (
                   projects.map((project) => {
@@ -67,7 +78,7 @@ export default function Home() {
                       <Project key={project.id} projectDetails={project} />
                     );
                   })
-                )} */}
+                )}
               </div>
             </div>
           </div>
