@@ -22,15 +22,9 @@ const Project: React.FC<ProjectProps> = ({ projectDetails }) => {
 
   const openProjectPage = (id: string) => {
     const newRoute = `/projects/${id}`; // Path for the route
-    const dataAsString = JSON.stringify(projectDetails); // Convert projectDetails to a string
-
-    // Manually create the query string
-    const queryString = new URLSearchParams({
-      projectDetails: dataAsString, // Convert projectDetails to a string for query param
-    }).toString();
 
     // Create the full URL including the query string
-    const fullUrl = `${newRoute}?${queryString}`;
+    const fullUrl = `${newRoute}`;
 
     // Navigate to the full URL
     router.push(fullUrl);

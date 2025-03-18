@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState, createContext } from "react";
 import { User, UserContextType } from "./types";
+import { ProjectDetails } from "@/components/Project/Project.model";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [user, setUser] = useState<User | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectDetails | null>(
+    null
+  );
   useEffect(() => {
     // window.sessionStorage.clear();
     var currentUser = window.sessionStorage.getItem("current_user");
@@ -42,7 +46,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider
+          value={{ user, setUser, selectedProject, setSelectedProject }}
+        >
           <Navbar></Navbar>
           {children}
         </UserContext.Provider>
