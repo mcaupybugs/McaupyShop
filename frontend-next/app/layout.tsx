@@ -5,7 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState, createContext } from "react";
 import { User, UserContextType } from "./types";
-import { ProjectDetails } from "@/components/Project/Project.model";
+import { ProjectSchema } from "@/components/Project/Project.model";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [user, setUser] = useState<User | null>(null);
-  const [selectedProject, setSelectedProject] = useState<ProjectDetails | null>(
+  const [selectedProject, setSelectedProject] = useState<ProjectSchema | null>(
     null
   );
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { ProjectDetails } from "@/components/Project/Project.model";
+import { ProjectSchema } from "@/components/Project/Project.model";
 
 export interface User {
   id: string;
@@ -9,8 +9,8 @@ export interface User {
 export interface UserContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  selectedProject: ProjectDetails | null;
+  selectedProject: ProjectSchema | null;
   setSelectedProject: React.Dispatch<
-    React.SetStateAction<ProjectDetails | null>
+    React.SetStateAction<ProjectSchema | null>
   >;
 }

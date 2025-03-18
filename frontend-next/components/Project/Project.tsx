@@ -1,13 +1,14 @@
 "use client";
 import { useContext } from "react";
-import { ProjectDetails } from "./Project.model";
+import { ProjectSchema } from "./Project.model";
 import { UserContext } from "@/app/layout";
 import { User, UserContextType } from "@/app/types";
 import { useRouter } from "next/navigation";
+import { PriceTagRibbon } from "../PriceTagRibbon";
 const mimeType = "image/png";
 
 interface ProjectProps {
-  projectDetails: ProjectDetails;
+  projectDetails: ProjectSchema;
 }
 
 const Project: React.FC<ProjectProps> = ({ projectDetails }) => {
@@ -16,7 +17,7 @@ const Project: React.FC<ProjectProps> = ({ projectDetails }) => {
     throw new Error("Context is not set right now");
   }
 
-  const { user, setUser } = context;
+  const { user, setUser, selectedProject, setSelectedProject } = context;
 
   let router = useRouter();
 
@@ -25,6 +26,8 @@ const Project: React.FC<ProjectProps> = ({ projectDetails }) => {
 
     // Create the full URL including the query string
     const fullUrl = `${newRoute}`;
+
+    setSelectedProject(projectDetails);
 
     // Navigate to the full URL
     router.push(fullUrl);
@@ -48,7 +51,7 @@ const Project: React.FC<ProjectProps> = ({ projectDetails }) => {
         </div>
       </div>
       <div className=" w-full flex flex-row flex-1/10 border-t justify-between p-2 ">
-        {/* <PriceTagRibbon price={projectDetails.price}></PriceTagRibbon> */}
+        <PriceTagRibbon price={projectDetails.price}></PriceTagRibbon>
         <div
           className=" w-contain border p-2 rounded-md cursor-pointer button-bg-color"
           // onClick={() => purchaseProjectHelper(projectDetails)}

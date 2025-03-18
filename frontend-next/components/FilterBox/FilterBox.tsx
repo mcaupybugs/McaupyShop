@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { ProjectDetails } from "../Project/Project.model";
+import { ProjectSchema } from "../Project/Project.model";
 
 interface FilterBoxProps {
-  projectDetails: ProjectDetails[];
-  changeProjectBasedOnFilter: (projects: ProjectDetails[]) => void;
+  projectDetails: ProjectSchema[];
+  changeProjectBasedOnFilter: (projects: ProjectSchema[]) => void;
 }
 const showDropdown = (dropDownIdSuffix: string) => {
   const allDropDownIdSuffix = ["sortby", "tags", "price"];
@@ -35,7 +35,7 @@ const showDropdown = (dropDownIdSuffix: string) => {
   }
 };
 
-const getUniqueTags = (projectDetails: ProjectDetails[]) => {
+const getUniqueTags = (projectDetails: ProjectSchema[]) => {
   var projectTags = projectDetails
     .map((project) => project.tags)
     .filter((tags) => Array.isArray(tags))
@@ -52,7 +52,7 @@ const FilterBox: React.FC<FilterBoxProps> = ({
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedProjects, setSelectedProjects] =
-    useState<ProjectDetails[]>(projectDetails);
+    useState<ProjectSchema[]>(projectDetails);
 
   const selectTag = (index: number) => {
     setSelectedTags((prevTags) => [...prevTags, uniqueTags[index]]);
@@ -120,7 +120,7 @@ const FilterBox: React.FC<FilterBoxProps> = ({
                         type="radio"
                         className="sort-by-tags"
                         name={tag}
-                        id={index}
+                        id={index.toString()}
                         onClick={() => selectTag(index)}
                       ></input>
                     </li>

@@ -2,15 +2,15 @@
 import { useEffect, useState } from "react";
 import { fetchProjects } from "@/services/ProjectService";
 import { FilterBox } from "@/components/FilterBox";
-import { ProjectDetails } from "@/components/Project/Project.model";
+import { ProjectSchema } from "@/components/Project/Project.model";
 import Project from "@/components/Project/Project";
 
 let totalProjects: [];
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [projects, setProjects] = useState<ProjectDetails[] | []>([]);
+  const [projects, setProjects] = useState<ProjectSchema[] | []>([]);
 
-  const changeProjectBasedOnFilter = (projects: ProjectDetails[]) => {
+  const changeProjectBasedOnFilter = (projects: ProjectSchema[]) => {
     if (projects.length == 0) {
       setProjects(totalProjects);
       return;

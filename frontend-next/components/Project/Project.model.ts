@@ -1,11 +1,11 @@
-export interface ProjectDetails {
+export interface ProjectSchema {
   id: string; // UUID
   title: string;
   description?: string; // Optional
-  price?: number; // Optional
-  displayImage?: string; // Optional
-  projectImages?: any; // Can be a JSON array or object, so we use `any` or a more specific type
-  projectBlob?: string; // Optional
-  rating?: number; // Optional, with validation 1-5
-  tags?: any; // JSON, can be an array or object, so `any` type is fine
+  price: number;
+  displayImage: string;
+  projectImages: any;
+  projectBlob: string;
+  rating: number;
+  tags: any;
 }
