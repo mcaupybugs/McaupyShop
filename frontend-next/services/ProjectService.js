@@ -8,3 +8,8 @@ export const fetchProjects = async () => {
   const response = await projectService.get("/projects");
   return response.data;
 };
+
+export const fetchProject = async (id) => {
+  const response = await projectService.get(`/projects/${id}`);
+  return response.data;
+};
