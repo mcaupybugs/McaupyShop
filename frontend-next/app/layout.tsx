@@ -36,7 +36,7 @@ export default function RootLayout({
     null
   );
   useEffect(() => {
-    // window.sessionStorage.clear();
+    //window.sessionStorage.clear();
     var currentUser = window.sessionStorage.getItem("current_user");
     if (currentUser !== null) {
       var parsedCurrentUser = JSON.parse(currentUser);

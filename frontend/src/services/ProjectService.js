@@ -10,6 +10,11 @@ export const fetchProjects = async () => {
   return response.data;
 };
 
+export const fetchProject = async (id) => {
+  const response = await projectService.get(`/projects/${id}`);
+  return response.data;
+};
+
 export const purchaseProject = async (projectDetails, userEmail) => {
   projectDetails.displayImage = null;
   projectDetails.projectImages = [];

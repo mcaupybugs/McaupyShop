@@ -1,12 +1,23 @@
+import { User } from "@/app/types";
 import { googleLogout } from "@react-oauth/google";
 
-const CircularLoginButton = ({ userData, setUserState }) => {
+interface CircularLoginButtonProps {
+  userData: User;
+  setUserState: React.Dispatch<React.SetStateAction<User | null>>;
+}
+
+const CircularLoginButton: React.FC<CircularLoginButtonProps> = ({
+  userData,
+  setUserState,
+}) => {
   const showLogout = () => {
-    var logoutButton = document.getElementById("logout-button");
-    if (logoutButton.classList.contains("hidden")) {
+    var logoutButton: HTMLElement | null =
+      document.getElementById("logout-button");
+
+    if (logoutButton?.classList.contains("hidden")) {
       logoutButton.classList.remove("hidden");
     } else {
-      logoutButton.classList.add("hidden");
+      logoutButton?.classList.add("hidden");
     }
   };
 

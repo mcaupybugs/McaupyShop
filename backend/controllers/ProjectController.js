@@ -3,6 +3,7 @@ import {
   CreateProject,
   DownloadProject,
   checkProjectPurchased,
+  getUsersLinkedToProject,
 } from "../service/ProjectService.js";
 
 const listProjects = async (req, res) => {
@@ -18,6 +19,12 @@ const listProject = async (req, res) => {
 const addProject = async (req, res) => {
   var newlyCreatedProject = await CreateProject(req.body);
   res.send(newlyCreatedProject);
+};
+
+const getUsersForProject = async (req, res) => {
+  console.log("id", req.params.id);
+  var users = await getUsersLinkedToProject(req.params.id);
+  res.json({ users });
 };
 
 const putProject = async (req, res) => {
@@ -69,6 +76,7 @@ export {
   patchProject,
   putProject,
   deleteProject,
+  getUsersForProject,
   deleteProjects,
   downloadProjectController,
 };

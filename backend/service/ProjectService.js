@@ -37,6 +37,28 @@ const DownloadProject = async (projectId) => {
   return projectZipBlobBuffer;
 };
 
+const getUsersLinkedToProject = async (projectId) => {
+  const project = await Project.findOne({
+    where: { id: projectId },
+    include: {
+      model: User,
+      as: "users", // Alias defined in the Project model
+      through: { attributes: [] }, // Hide the join table (UserProject) attributes
+    },
+  });
+  console.log(project);
+  if (!project) {
+    console.log("Project not found");
+    return [];
+  }
+
+  // Users linked to the project
+  const users = project.users; // This is the result from the 'users' alias
+
+  console.log(users);
+  return users;
+};
+
 const checkProjectPurchased = async (projectId, userEmail) => {
   var userContext = await User.findOne({ where: { email: userEmail } });
   if (!userContext) {
@@ -52,4 +74,9 @@ const checkProjectPurchased = async (projectId, userEmail) => {
   }
 };
 
-export { CreateProject, DownloadProject, checkProjectPurchased };
+export {
+  CreateProject,
+  DownloadProject,
+  getUsersLinkedToProject,
+  checkProjectPurchased,
+};

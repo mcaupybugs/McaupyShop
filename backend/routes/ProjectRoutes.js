@@ -11,6 +11,11 @@ ProjectRouter.route("/:id").get(catchError(ProjectController.listProject));
 ProjectRouter.route("/:id/download").post(
   catchError(ProjectController.downloadProjectController)
 );
+
+ProjectRouter.route("/:id/users").get(
+  catchError(ProjectController.getUsersForProject)
+);
+
 ProjectRouter.route("/").post(catchError(ProjectController.addProject));
 
 ProjectRouter.route("/:id").put(catchError(ProjectController.putProject));
