@@ -4,7 +4,12 @@ import { PriceTagRibbon } from "@/components/PriceTagRibbon";
 import { ProjectSchema } from "@/components/Project/Project.model";
 import { RatingRibbon } from "@/components/RatingRibbon";
 import Slider from "@/components/Slider";
-import { fetchProject } from "@/services/ProjectService";
+import {
+  downloadProject,
+  fetchIsProjectPurchased,
+  fetchProject,
+  purchaseProject,
+} from "@/services/ProjectService";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FaDollarSign } from "react-icons/fa";
@@ -17,6 +22,14 @@ export default function ProjectView() {
   var [projectDetails, setProjectDetails] = useState<ProjectSchema | undefined>(
     undefined
   );
+  const [isProjectPurchased, setIsProjectPurchased] = useState<boolean | null>(
+    null
+  );
+  if (!context) {
+    console.log("There is no context set");
+    throw new Error("Context is not set right now");
+  }
+  const { user, setUser, selectedProject } = context;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,16 +39,70 @@ export default function ProjectView() {
 
     fetchData();
   }, []);
-  if (!context) {
-    console.log("There is no context set");
-    throw new Error("Context is not set right now");
-  }
-  const { user, setUser } = context;
+
+  useEffect(() => {
+    const fetchProjectDetails = async () => {
+      if (user && projectDetails) {
+        console.log(projectDetails);
+        const isProjectPurchased = await fetchIsProjectPurchased(
+          user?.id,
+          projectDetails?.id
+        );
+        setIsProjectPurchased(isProjectPurchased);
+      }
+    };
+    fetchProjectDetails();
+  }, [user, projectDetails]);
 
   if (!projectDetails) {
     // TODO : Create a loading animation and put it here!
     return <div>Loading</div>;
   }
+  const downloadProjectHelper = async (projectZipBlobUrl: string) => {
+    try {
+      console.log("ProjectBlob", projectZipBlobUrl);
+      if (!projectZipBlobUrl) {
+        return;
+      }
+      const tempLink = document.createElement("a");
+      tempLink.href = projectZipBlobUrl;
+      tempLink.download = `${projectDetails?.title}.zip`;
+      document.body.append(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      URL.revokeObjectURL(projectZipBlobUrl);
+    } catch (error) {
+      console.log("Error downloading the file:", error);
+    }
+  };
+
+  const purchaseProjectHelper = async (projectDetails: ProjectSchema) => {
+    if (!user) {
+      // create an alert tab
+      console.log("Please login to buy the project");
+      return;
+    }
+    console.log("user email", user.email);
+    var result = await purchaseProject(projectDetails, user.email);
+    console.log("RESULT", result);
+    var fileUrl = await downloadProject(projectDetails, user.email);
+    if (!fileUrl) {
+      console.log("File not found on server!");
+      return;
+    }
+    await downloadProjectHelper(fileUrl);
+  };
+
+  const initiateDownloadProject = async (projectDetails: ProjectSchema) => {
+    var fileUrl: string | undefined = await downloadProject(
+      projectDetails,
+      user?.email
+    );
+    if (!fileUrl) {
+      throw new Error("File url is null");
+    }
+    await downloadProjectHelper(fileUrl);
+  };
 
   return (
     <div className="h-full w-full flex flex-col pb-12">
@@ -100,21 +167,22 @@ export default function ProjectView() {
               </div>
             </div>
             <div className="h-full w-full flex flex-col basis-2/6 gap-6 p-2 pl-14 pr-14 pt-14">
-              <div className="h-full w-full border flex flex-row rounded-md p-2 place-items-center gap-2">
-                <FaDollarSign className="text-xl"></FaDollarSign>
-                <input
-                  type="number"
-                  placeholder="Place your bid .."
-                  className="text-xl outline-none itim-regular"
-                ></input>
-              </div>
               <div
                 className="h-full w-full border text-2xl cursor-pointer rounded-md button-bg-color flex justify-center font-light p-2"
                 // onClick={() =>
                 //   purchaseProjectHelper(projectDetails.title, projectDetails.id)
                 // }
               >
-                Buy Now !!!
+                {isProjectPurchased && (
+                  <div onClick={() => initiateDownloadProject(projectDetails!)}>
+                    Download Now !!!
+                  </div>
+                )}
+                {!isProjectPurchased && (
+                  <div onClick={() => purchaseProjectHelper(projectDetails!)}>
+                    Buy Now !!!
+                  </div>
+                )}
               </div>
               <div className="h-full w-full flex gap-2 flex-wrap">
                 {projectDetails &&

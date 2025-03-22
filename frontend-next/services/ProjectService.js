@@ -12,6 +12,7 @@ export const fetchProjects = async () => {
 export const fetchIsProjectPurchased = async (userId, projectId) => {
   const response = await projectService.get(`/projects/${projectId}/users`);
   var userList = response.data;
+  console.log(userList);
   const isUserPurchased = userList.some((user) => user.id === userId);
 
   console.log("Is User Purchased:", isUserPurchased);
