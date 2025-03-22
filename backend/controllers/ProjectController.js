@@ -24,7 +24,8 @@ const addProject = async (req, res) => {
 const getUsersForProject = async (req, res) => {
   console.log("id", req.params.id);
   var users = await getUsersLinkedToProject(req.params.id);
-  res.json({ users });
+  console.log("Users from controller", users);
+  res.json(users);
 };
 
 const putProject = async (req, res) => {
@@ -54,6 +55,7 @@ const deleteProjects = async (req, res) => {
 const downloadProjectController = async (req, res) => {
   const projectId = req.params.id;
   var userEmail = req.body.userEmail;
+  console.log("Download running", userEmail);
   var isProjectPurchased = await checkProjectPurchased(projectId, userEmail);
   if (!isProjectPurchased) {
     res.send(403).json({ err: "Payment not done" });

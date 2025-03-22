@@ -11,7 +11,12 @@ export const fetchProjects = async () => {
 
 export const fetchIsProjectPurchased = async (userId, projectId) => {
   const response = await projectService.get(`/projects/${projectId}/users`);
-  console.log("Response from fetch users", response);
+  var userList = response.data;
+  const isUserPurchased = userList.some((user) => user.id === userId);
+
+  console.log("Is User Purchased:", isUserPurchased);
+
+  return isUserPurchased;
 };
 
 export const fetchProject = async (id) => {
@@ -69,6 +74,8 @@ export const purchaseProject = async (projectDetails, userEmail) => {
 };
 
 export const downloadProject = async (projectDetails, userEmail) => {
+  projectDetails.displayImage = null;
+  projectDetails.projectImages = [];
   var projectDownloadPayload = {
     projectDetails: projectDetails,
     userEmail: userEmail,

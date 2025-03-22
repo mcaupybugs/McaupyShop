@@ -27,13 +27,24 @@ const Project: React.FC<ProjectProps> = ({ projectDetails }) => {
     null
   );
 
+  const initiateDownloadProject = async (projectDetails: ProjectSchema) => {
+    var fileUrl: string | undefined = await downloadProject(
+      projectDetails,
+      user?.email
+    );
+    if (!fileUrl) {
+      throw new Error("File url is null");
+    }
+    await downloadProjectHelper(fileUrl);
+  };
+
   useEffect(() => {
     const fetchProjectDetails = async () => {
       if (user) {
         console.log(user);
         const isProjectPurchased = await fetchIsProjectPurchased(
           user?.id,
-          selectedProject?.id
+          projectDetails?.id
         );
         setIsProjectPurchased(isProjectPurchased);
       }
@@ -110,12 +121,18 @@ const Project: React.FC<ProjectProps> = ({ projectDetails }) => {
       </div>
       <div className=" w-full flex flex-row flex-1/10 border-t justify-between p-2 ">
         <PriceTagRibbon price={projectDetails.price}></PriceTagRibbon>
-        <div
-          className=" w-contain border p-2 rounded-md cursor-pointer button-bg-color"
-          onClick={() => purchaseProjectHelper(projectDetails)}
-        >
+        <div className=" w-contain border p-2 rounded-md cursor-pointer button-bg-color">
           {" "}
-          Quick Buy
+          {!isProjectPurchased && (
+            <div onClick={() => purchaseProjectHelper(projectDetails)}>
+              Quick Buy
+            </div>
+          )}
+          {isProjectPurchased && (
+            <div onClick={() => initiateDownloadProject(projectDetails)}>
+              Download Project
+            </div>
+          )}
         </div>
       </div>
     </div>
