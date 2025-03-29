@@ -1,0 +1,22 @@
+name: Build and Deploy Frontend Docker Image to AKS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+
+    env:
+      AZURE_REGISTRY: testingproject.azurecr.io
+      AKS_CLUSTER: <aks-cluster-name>
+      RESOURCE_GROUP: vishal-ai
+      IMAGE_NAME: my-node-app
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.2.2
+
+    
