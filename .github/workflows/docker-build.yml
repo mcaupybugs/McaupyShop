@@ -10,13 +10,32 @@ jobs:
 
 
     env:
-      AZURE_REGISTRY: testingproject.azurecr.io
+      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       AKS_CLUSTER: <aks-cluster-name>
       RESOURCE_GROUP: vishal-ai
-      IMAGE_NAME: my-node-app
+      IMAGE_NAME: mcaupyshop-frontend
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4.2.2
+
+    - name: Docker Login
+      uses: docker/login-action@v3.4.0
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    
+    - name: Build Docker image
+      run: |
+        docker build -t $DOCKER_HUB_USERNAME/$IMAGE_NAME:latest ./frontend-next/.
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker push $DOCKER_HUB_USERNAME/$IMAGE_NAME:latest
+      
+
+    
 
     
