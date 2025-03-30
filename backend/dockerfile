@@ -1,0 +1,12 @@
+FROM node:23
+
+WORKDIR /app
+COPY package*.json ./
+# Install dependencies
+RUN npm install --build-from-source sqlite3
+COPY . .
+
+EXPOSE 3000
+
+# Default to 'dev' if no environment variable is set
+CMD ["sh", "-c", "npm run ${NODE_ENV:-dev}"]
