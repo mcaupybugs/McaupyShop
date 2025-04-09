@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcaupyshop-backend-deployment
+  labels:
+    app: mcaupyshop-backend
+    version: v1
+    environment: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mcaupyshop-backend
+  template:
+    metadata:
+      labels:
+        app: mcaupyshop-backend
+    spec:
+      containers:
+        - name: mcaupyshop-backend
+          image: mcaupybugs/mcaupyshop-backend:latest
+          ports:
+            - containerPort: 3000
