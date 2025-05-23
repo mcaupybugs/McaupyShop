@@ -1,6 +1,6 @@
 import Project from "../models/Project.js";
 import User from "../models/User.js";
-import { downloadBlob, getImageFromBlobName } from "./StorageBlobService.js";
+import { readFile, readImageAsBase64 } from "./StorageBlobService.js";
 
 const CreateProject = async (payload) => {
   console.log(payload);
@@ -8,16 +8,17 @@ const CreateProject = async (payload) => {
   var projectBlobImages = [];
 
   payload.projectImages.map(async (image) => {
-    var content = await getImageFromBlobName(image);
+    var content = await readImageAsBase64(image);
     console.log("Contnet", content);
     projectBlobImages.push(content);
   });
 
+  let displayImage = await readImageAsBase64(payload.displayImage);
   var newProject = {
     title: payload.title,
     description: payload.description,
     price: payload.price,
-    displayImage: await getImageFromBlobName(payload.displayImage),
+    displayImage: displayImage,
     projectImages: projectBlobImages,
     rating: payload.rating,
     tags: payload.tags,
@@ -32,7 +33,7 @@ const CreateProject = async (payload) => {
 const DownloadProject = async (projectId) => {
   var projectDetails = await Project.findOne({ id: projectId });
   var projectZipName = projectDetails.title.replaceAll(" ", "") + "-code.zip";
-  var projectZipBlobBuffer = await downloadBlob(projectZipName);
+  var projectZipBlobBuffer = await readFile(projectZipName);
   console.log(projectZipBlobBuffer);
   return projectZipBlobBuffer;
 };

@@ -29,7 +29,7 @@ const CircularLoginButton: React.FC<CircularLoginButtonProps> = ({
   };
 
   return (
-    <div className="h-full w-full flex flex-col">
+    <div className="h-full w-full flex flex-col z-10">
       <div
         className="h-full w-full flex flex-row justify-start p-2 pr-8 gap-2"
         onClick={showLogout}
@@ -43,8 +43,8 @@ const CircularLoginButton: React.FC<CircularLoginButtonProps> = ({
       </div>
       <div
         id="logout-button"
-        className="h-full w-full bg-gray-100 p-2 hidden"
-        onClick={logout}
+        className="h-full w-full bg-gray-100 p-2 hidden z-2"
+        onClick={() => logout()}
       >
         Logout
       </div>

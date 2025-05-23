@@ -18,7 +18,8 @@ const Project = sequelize.define("Project", {
     type: DataTypes.INTEGER,
   },
   displayImage: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT("long"), // For large base64 strings
+    allowNull: true,
   },
   projectImages: {
     type: DataTypes.JSON,
