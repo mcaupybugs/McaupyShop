@@ -5,6 +5,8 @@ interface FilterBoxProps {
   projectDetails: ProjectSchema[];
   changeProjectBasedOnFilter: (projects: ProjectSchema[]) => void;
 }
+
+// Adding functionality to show and hide dropdowns based on the click event.
 const showDropdown = (dropDownIdSuffix: string) => {
   const allDropDownIdSuffix = ["sortby", "tags", "price"];
   var output = document.getElementById(
