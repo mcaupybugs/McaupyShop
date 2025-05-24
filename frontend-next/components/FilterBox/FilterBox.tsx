@@ -57,7 +57,21 @@ const FilterBox: React.FC<FilterBoxProps> = ({
     useState<ProjectSchema[]>(projectDetails);
 
   const selectTag = (index: number) => {
-    setSelectedTags((prevTags) => [...prevTags, uniqueTags[index]]);
+    if (selectedTags.includes(uniqueTags[index])) {
+      // If the tag is already selected, remove it from the selectedTags array
+      const inputElement = document.getElementById(
+        index.toString()
+      ) as HTMLInputElement | null;
+      if (inputElement) {
+        inputElement.checked = false;
+      }
+      setSelectedTags((prevTags) =>
+        prevTags.filter((tag) => tag !== uniqueTags[index])
+      );
+      return;
+    } else {
+      setSelectedTags((prevTags) => [...prevTags, uniqueTags[index]]);
+    }
   };
 
   const clearTags = () => {
